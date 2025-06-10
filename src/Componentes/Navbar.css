@@ -1,0 +1,37 @@
+
+.navbarr {
+    background: linear-gradient(150deg, #1c681c, #b1f0a5);
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.links a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: rgb(231, 235, 7);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: rgb(15, 235, 7);
+    text-decoration: underline;
+}
+
+
+.nombre {
+    color:rgb(231, 235, 7);
+}
+
+
+img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 60px;     
+  width: auto;
+  object-fit: contain;
+  margin-left: 20px; 
+}
