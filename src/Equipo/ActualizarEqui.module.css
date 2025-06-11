@@ -1,0 +1,52 @@
+.form-container {
+  max-width: 500px;
+  margin: 4rem auto;
+  background-color: #111;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+  color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #FFC107;
+  margin-bottom: 2rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  border: 1px solid #FFC107;
+  border-radius: 6px;
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+button {
+  background-color: #FFC107;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e6b800;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}

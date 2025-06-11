@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 interface Equipo {
   codigo: number;
   nombre: string;
-  anio_de_fundacion: number;
+  anio_de_fundacion: number; 
   presidente: string;
 }
 

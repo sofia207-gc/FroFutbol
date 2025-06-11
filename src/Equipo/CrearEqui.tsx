@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./FormularioEquii.css";
 import { Alert } from "react-bootstrap";
+import styles from './CrearEqui.module.css';
 
-const Crear: React.FC = () => {
+const CrearEqui: React.FC = () => {
   const [nombre, setNombre] = useState("");
   const [anio_de_fundacion, setAnio_de_fundacion] = useState<number>(0);
   const [dni_del_presidente, setDni_del_presidente] = useState<number>(0);
@@ -52,12 +52,12 @@ const Crear: React.FC = () => {
   };
 
   return (
-    <div className="form-container">
-      <div className="formulario">
+    <div className={styles.formContainer}>
+      <div className={styles.formulario}>
         <form>
-          <h1>FORMULARIO EQUIPO</h1>
-          <div className="input-row">
-            <div className="input-group">
+          <h1 className={styles.titulo}>Formulario Equipo</h1>
+          <div className={styles.inputRow}>
+            <div className={styles.inputGroup}>
               <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
@@ -67,7 +67,7 @@ const Crear: React.FC = () => {
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="anio">Año de Fundación</label>
               <input
                 type="number"
@@ -80,7 +80,7 @@ const Crear: React.FC = () => {
               />
             </div>
 
-            <div className="input-group">
+            <div className={styles.inputGroup}>
               <label htmlFor="dni">DNI Presidente</label>
               <input
                 type="number"
@@ -94,13 +94,18 @@ const Crear: React.FC = () => {
             </div>
           </div>
 
-          <button type="button" onClick={guardarEqui} disabled={cargando}>
+          <button
+            type="button"
+            onClick={guardarEqui}
+            disabled={cargando}
+            className={styles.boton}
+          >
             {cargando ? "Guardando..." : "Guardar"}
           </button>
         </form>
 
         {mensaje && (
-          <Alert variant="info" className="mt-3 text-center">
+          <Alert variant="info" className={`mt-3 text-center ${styles.alerta}`}>
             {mensaje}
           </Alert>
         )}
@@ -109,4 +114,4 @@ const Crear: React.FC = () => {
   );
 };
 
-export default Crear;
+export default CrearEqui;
