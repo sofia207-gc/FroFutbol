@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./ActualizarPresi.module.css";
 
 interface Equipos {
-  codigo: number;
+  dni: number;
   nombre: string;
-  anio_de_fundacion: number;
-  presidente: string;
 }
 
 const Actu: React.FC = () => {
@@ -20,7 +18,7 @@ const Actu: React.FC = () => {
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://localhost:1111/equipos/${equipoAEditar.codigo}`, {
+      const res = await fetch(`http://localhost:1111/presi/${equipoAEditar.codigo}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 interface Equipo {
   codigo: number;
   nombre: string;
-  anio_de_fundacion: number; 
-  presidente: string;
+  anio_fund: number; 
+  dni_presi: string;
 }
 
 const FiltrarEquipo: React.FC = () => {
@@ -14,7 +14,7 @@ const FiltrarEquipo: React.FC = () => {
 
   const cargarEquipos = async () => {
     try {
-      const res = await fetch("http://localhost:3333/equipos");
+      const res = await fetch("http://localhost:49849/equipo");
       const data = await res.json();
       console.log("Datos recibidos:", data); 
 
@@ -35,8 +35,8 @@ const FiltrarEquipo: React.FC = () => {
   const equiposFiltrados = equipos.filter(
     (equipo) =>
       equipo.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-      equipo.presidente.toLowerCase().includes(filtro.toLowerCase()) ||
-      equipo.anio_de_fundacion.toString().includes(filtro) ||
+      equipo.dni_presi.toLowerCase().includes(filtro.toLowerCase()) ||
+      equipo.anio_fund.toString().includes(filtro) ||
       equipo.codigo.toString().includes(filtro)
   );
 
@@ -69,8 +69,8 @@ const FiltrarEquipo: React.FC = () => {
               <tr key={equipo.codigo}>
                 <td>{equipo.codigo}</td>
                 <td>{equipo.nombre}</td>
-                <td>{equipo.presidente}</td>
-                <td>{equipo.anio_de_fundacion}</td>
+                <td>{equipo.dni_presi}</td>
+                <td>{equipo.anio_fund}</td>
               </tr>
             ))}
           </tbody>

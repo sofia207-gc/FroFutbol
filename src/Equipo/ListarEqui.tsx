@@ -5,8 +5,8 @@ import styles from "./ListarEqui.module.css";
 interface Equipo {
   id: number;
   nombre: string;
-  presidente: string;
-  fundacion: number;
+  dni_presi: string;
+  anio_fund: number;
 }
 
 const ListarEqui: React.FC = () => {
@@ -16,7 +16,7 @@ const ListarEqui: React.FC = () => {
 
   const listarEquipos = async () => {
     try {
-      const res = await fetch("http://localhost:1111/equipos");
+      const res = await fetch("http://localhost:49849/equipo");
       const data = await res.json();
       setEquipos(data.mensaje);
     } catch (error) {
@@ -29,7 +29,7 @@ const ListarEqui: React.FC = () => {
     if (!confirmado) return;
 
     try {
-      const res = await fetch(`http://localhost:1111/equipos/${id}`, {
+      const res = await fetch(`http://localhost:49849/equipo/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Error al eliminar equipo");
@@ -39,6 +39,7 @@ const ListarEqui: React.FC = () => {
       alert("No se pudo eliminar el equipo.");
       console.error("Error:", error);
     }
+    return(eliminarEquipo);
   };
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const ListarEqui: React.FC = () => {
 
   const equiposFiltrados = equipos.filter((e) =>
     e.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    e.presidente.toLowerCase().includes(filtro.toLowerCase()) ||
+    e.dni_presi.toLowerCase().includes(filtro.toLowerCase()) ||
     e.id.toString().includes(filtro)
   );
 
@@ -75,8 +76,8 @@ const ListarEqui: React.FC = () => {
             <tr key={equipo.id}>
               <td>{equipo.id}</td>
               <td>{equipo.nombre}</td>
-              <td>{equipo.presidente}</td>
-              <td>{equipo.fundacion}</td>
+              <td>{equipo.dni_presi}</td>
+              <td>{equipo.anio_fund}</td>
               <td>
                 <button className="btn btn-danger" onClick={() => eliminarEquipo(equipo.id)}>
                   Eliminar
