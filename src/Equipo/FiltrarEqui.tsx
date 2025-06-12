@@ -14,7 +14,7 @@ const FiltrarEquipo: React.FC = () => {
 
   const cargarEquipos = async () => {
     try {
-      const res = await fetch("http://localhost:3333/equipos");
+      const res = await fetch("http://localhost:3333/equipo");
       const data = await res.json();
       console.log("Datos recibidos:", data); 
 

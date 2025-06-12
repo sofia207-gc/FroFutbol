@@ -1,36 +1,34 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./ActualizarPresi.module.css";
 
-interface Equipos {
-  codigo: number;
-  nombre: string;
-  anio_de_fundacion: number;
-  presidente: string;
+
+interface Presi {
+  nombre: string
+  dni_presi: number
 }
 
-const Actu: React.FC = () => {
-  const [equipoAEditar, setEquipoAEditar] = useState<Equipos | null>(null);
-  const navigate = useNavigate();
+const ActuPresi: React.FC = () => {
+  const [presiAEditar, setPresiAEditar] = useState<Presi | null>(null);
+
 
   const actualizarEquipo = async () => {
-    if (!equipoAEditar) return;
+    
+    if (!presiAEditar) return;
 
     const seguro = confirm("¿Estás seguro de que quieres actualizar este equipo?");
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://localhost:1111/equipos/${equipoAEditar.codigo}`, {
+      const res = await fetch(`http://localhost:3333/presi/${presiAEditar.dni_presi}`, {  
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(equipoAEditar),
+        body: JSON.stringify(presiAEditar),
       });
 
       if (!res.ok) throw new Error("Error al actualizar equipo.");
       await res.json();
-      setEquipoAEditar(null);
+      setPresiAEditar(null);
     } catch (error) {
       alert("No se pudo actualizar el equipo.");
       console.error("Error:", error);
@@ -40,7 +38,7 @@ const Actu: React.FC = () => {
   return (
     <div>
       {/* Modal de edición */}
-      {equipoAEditar && (
+      {presiAEditar && (
         <div className="modal-overlay">
           <div className="modal">
             <h4>Actualizar Equipo</h4>
@@ -48,40 +46,37 @@ const Actu: React.FC = () => {
             <input
               type="text"
               placeholder="Nombre"
-              value={equipoAEditar.nombre}
+              value={presiAEditar.nombre}
               onChange={(e) =>
-                setEquipoAEditar({ ...equipoAEditar, nombre: e.target.value })
-              }
-            />
-
-            <input
-              type="text"
-              placeholder="Presidente"
-              value={equipoAEditar.presidente}
-              onChange={(e) =>
-                setEquipoAEditar({ ...equipoAEditar, presidente: e.target.value })
+                setPresiAEditar({ ...presiAEditar, nombre: e.target.value })
               }
             />
 
             <input
               type="number"
               placeholder="Año de Fundación"
-              value={equipoAEditar.anio_de_fundacion}
+              value={presiAEditar.dni_presi}
               onChange={(e) =>
-                setEquipoAEditar({
-                  ...equipoAEditar,
-                  anio_de_fundacion: parseInt(e.target.value) || 0,
+                setPresiAEditar({
+                  ...presiAEditar,
+                  dni_presi: parseInt(e.target.value) || 0,
                 })
               }
             />
 
+            <input
+              type="string"
+              placeholder="nombre"
+              value={presiAEditar.nombre}
+              onChange={(e) =>
+                setPresiAEditar({
+                  ...presiAEditar,
+                   nombre: e.target.value,
+                })
+              }
+            />
             <button onClick={actualizarEquipo}>Guardar</button>
-            <button
-              onClick={() => setEquipoAEditar(null)}
-              style={{ marginLeft: "0.5rem", backgroundColor: "#ccc", color: "#333" }}
-            >
-              Cancelar
-            </button>
+            <button onClick={() => setPresiAEditar(null)}>Cancelar</button>
           </div>
         </div>
       )}
@@ -89,4 +84,4 @@ const Actu: React.FC = () => {
   );
 };
 
-export default Actu;
+export default ActuPresi;

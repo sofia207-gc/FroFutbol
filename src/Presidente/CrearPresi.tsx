@@ -1,46 +1,45 @@
 import { useState } from "react";
+import { Alert } from "react-bootstrap";
 import styles from "./CrearPresi.module.css";
 
 const CrearPresi: React.FC = () => {
   const [dni, setDni] = useState("");
   const [nombre, setNombre] = useState("");
+  const [mensaje, setMensaje] = useState<string>("");
+  const [cargando, setCargando] = useState(false);
 
-  const guardarPresi = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!dni || !nombre) {
-      alert("Por favor completa todos los campos.");
+  const guardarPresi = async () => {
+    if (dni.trim() === "" || nombre.trim() === "") {
+      setMensaje("Por favor completa todos los campos.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3333/presidentes", {
+      setCargando(true);
+      const response = await fetch("http://localhost:3333/presi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dni, nombre }),
       });
-
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.statusText}`);
-      }
-
       const data = await response.json();
-      alert("Presidente guardado correctamente");
-
-      setDni("");
-      setNombre("");
-    } catch (error) {
-      console.error("Error al guardar presidente:", error);
-      alert("Ocurrió un error al guardar el presidente.");
+      if (!response.ok) {
+        setMensaje(data.mensaje || "Ocurrió un error al crear el presidente.");
+      } else {
+        setMensaje(data.mensaje || "Presidente guardado con éxito.");
+      }
+      } catch (error) {
+      console.error("Error al crear al Presidente:", error);
+      setMensaje("Error al conectar con el servidor.");
+    } finally {
+      setCargando(false);
     }
   };
 
   return (
     <div className={styles.formContainer}>
       <div className={styles.formulario}>
-        <form onSubmit={guardarPresi}>
+        <form>
           <h1 className={styles.titulo}>Formulario Presidente</h1>
-
           <div className={styles.formGroup}>
             <label htmlFor="dni" className={styles.label}>DNI</label>
             <input
@@ -63,11 +62,26 @@ const CrearPresi: React.FC = () => {
             />
           </div>
 
-          <button type="submit" className={styles.boton}>Guardar</button>
+          <button
+            type="button"
+            onClick={guardarPresi}
+            disabled={cargando}
+            className={styles.boton}
+          >
+            {cargando ? "Guardando..." : "Guardar"}
+          </button>
         </form>
+
+        {mensaje && (
+          <Alert variant="info" className={`mt-3 text-center ${styles.alerta}`}>
+            {mensaje}
+          </Alert>
+        )}
+        
       </div>
     </div>
   );
 };
+
 
 export default CrearPresi;

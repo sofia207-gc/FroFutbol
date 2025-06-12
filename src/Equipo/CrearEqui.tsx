@@ -4,36 +4,33 @@ import styles from './CrearEqui.module.css';
 
 const CrearEqui: React.FC = () => {
   const [nombre, setNombre] = useState("");
-  const [anio_de_fundacion, setAnio_de_fundacion] = useState<number>(0);
-  const [dni_del_presidente, setDni_del_presidente] = useState<number>(0);
+  const [anio_fund, setAnio_fund] = useState<number>(0);
+  const [dni_presi, setDni_presi] = useState<number>(0);
   const [mensaje, setMensaje] = useState<string>("");
   const [cargando, setCargando] = useState(false);
 
   const guardarEqui = async () => {
     if (nombre.trim() === "") {
-      setMensaje("El nombre no puede estar vacío.");
+      setMensaje("Por favor completa todos los campos.");
       return;
     }
 
-    if (!anio_de_fundacion || anio_de_fundacion <= 0) {
+    if (!anio_fund || anio_fund <= 0) {
       setMensaje("Año de fundación inválido.");
       return;
     }
 
-    if (!dni_del_presidente || dni_del_presidente <= 0) {
+    if (!dni_presi || dni_presi <= 0) {
       setMensaje("DNI del presidente inválido.");
       return;
     }
 
     try {
       setCargando(true);
-      const response = await fetch("http://localhost:1111/equipos", {
+      const response = await fetch("http://localhost:1111/equipo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre: nombre.trim(),
-          anio_de_fundacion,
-          dni_del_presidente,
+        body: JSON.stringify({nombre,anio_fund,dni_presi,
         }),
       });
 
@@ -72,10 +69,10 @@ const CrearEqui: React.FC = () => {
               <input
                 type="number"
                 id="anio"
-                value={anio_de_fundacion}
+                value={anio_fund}
                 onChange={(e) => {
                   const value = e.target.value;
-                  setAnio_de_fundacion(value === "" ? 0 : parseInt(value));
+                  setAnio_fund(value === "" ? 0 : parseInt(value));
                 }}
               />
             </div>
@@ -85,10 +82,10 @@ const CrearEqui: React.FC = () => {
               <input
                 type="number"
                 id="dni"
-                value={dni_del_presidente}
+                value={dni_presi}
                 onChange={(e) => {
                   const value = e.target.value;
-                  setDni_del_presidente(value === "" ? 0 : parseInt(value));
+                  setDni_presi(value === "" ? 0 : parseInt(value));
                 }}
               />
             </div>

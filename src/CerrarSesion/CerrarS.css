@@ -1,0 +1,51 @@
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.logout-container h1 {
+  font-size: 2rem;
+  color: #FFA500;
+  margin-bottom: 40px;
+}
+
+.logout-button {
+  font-size: 1rem;
+  padding: 10px 25px;
+  margin: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.logout-button:hover {
+  transform: scale(1.05);
+}
+
+.logout-button:first-of-type {
+  border: 2px solid #28a745;
+  color: #28a745;
+  background-color: transparent;
+}
+
+.logout-button:first-of-type:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.logout-button:last-of-type {
+  border: 2px solid #dc3545;
+  color: #dc3545;
+  background-color: transparent;
+}
+
+.logout-button:last-of-type:hover {
+  background-color: #dc3545;
+  color: white;
+}

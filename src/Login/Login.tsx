@@ -10,7 +10,7 @@ const Login = () => {
   const enviardatos = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:2530/login", {
+    const res = await fetch("http://127.0.0.1:4523/usuario", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password: contraseña }),
@@ -23,6 +23,9 @@ const Login = () => {
       localStorage.setItem("contraseña", contraseña);
       localStorage.setItem("auth", "true");
       navigate("/crearEqui"); 
+    }
+    if (data.msj === "Usuario no encontrado") {
+      alert("Usuario no encontrado");
     }
 
     console.log(data);
@@ -46,7 +49,9 @@ const Login = () => {
             <img src="/balon.png" alt="balón" className="balon-btn" />
             INGRESAR
           </button>
-          <a href="#">REGISTRARSE</a>
+          <a href="#" onClick={() => navigate("/registro")}>
+            ¿No tienes cuenta? REGISTRATE AHORA
+          </a>
         </form>
       </div>
     </div>

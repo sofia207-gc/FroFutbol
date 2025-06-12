@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./ActualizarEqui.module.css";
+
 
 interface Equipos {
   codigo: number;
   nombre: string;
-  anio_de_fundacion: number;
-  presidente: string;
+  anio_fund: number;
+  dni_presi: string;
 }
 
 const ActuEqui: React.FC = () => {
   const [equipoAEditar, setEquipoAEditar] = useState<Equipos | null>(null);
-  const navigate = useNavigate();
+
 
   const actualizarEquipo = async () => {
     if (!equipoAEditar) return;
@@ -20,7 +19,7 @@ const ActuEqui: React.FC = () => {
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://localhost:1111/equipos/${equipoAEditar.codigo}`, {
+      const res = await fetch(`http://localhost:3333/equipo/${equipoAEditar.codigo}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -57,20 +56,20 @@ const ActuEqui: React.FC = () => {
             <input
               type="text"
               placeholder="Presidente"
-              value={equipoAEditar.presidente}
+              value={equipoAEditar.dni_presi}
               onChange={(e) =>
-                setEquipoAEditar({ ...equipoAEditar, presidente: e.target.value })
+                setEquipoAEditar({ ...equipoAEditar, dni_presi: e.target.value })
               }
             />
 
             <input
               type="number"
               placeholder="Año de Fundación"
-              value={equipoAEditar.anio_de_fundacion}
+              value={equipoAEditar.anio_fund}
               onChange={(e) =>
                 setEquipoAEditar({
                   ...equipoAEditar,
-                  anio_de_fundacion: parseInt(e.target.value) || 0,
+                  anio_fund: parseInt(e.target.value) || 0,
                 })
               }
             />
