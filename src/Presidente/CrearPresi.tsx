@@ -15,8 +15,7 @@ const CrearPresi: React.FC = () => {
     }
 
     try {
-      setCargando(true);
-      const response = await fetch("http://localhost:3333/presi", {
+      const response = await fetch("http://127.0.0.1:4523/presidentes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dni, nombre }),

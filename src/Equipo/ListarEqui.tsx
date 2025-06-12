@@ -17,7 +17,7 @@ const ListarEqui: React.FC = () => {
 
   const listarEquipos = async () => {
     try {
-      const res = await fetch("http://localhost:3333/equipo");
+      const res = await fetch("http://127.0.0.1:4523/equipos");
       const data = await res.json();
       setEquipos(data.mensaje);
     } catch (error) {
@@ -30,7 +30,7 @@ const ListarEqui: React.FC = () => {
     if (!confirmado) return;
 
     try {
-      const res = await fetch(`http://localhost:3333/equipo/${id}`, {
+      const res = await fetch(`http://127.0.0.1:4523/equipos/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Error al eliminar equipo");
@@ -40,6 +40,7 @@ const ListarEqui: React.FC = () => {
       alert("No se pudo eliminar el equipo.");
       console.error("Error:", error);
     }
+    return(eliminarEquipo);
   };
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const ListarPresi: React.FC = () => {
 
   const listarPresidentes = async () => {
     try {
-      const res = await fetch('http://localhost:3333/presi');
+      const res = await fetch("http://127.0.0.1:4523/presidentes");
       const data = await res.json();
       setPresidentes(data.mensaje);
     } catch (error) {
@@ -28,7 +28,7 @@ const ListarPresi: React.FC = () => {
     if (!confirmado) return;
 
     try {
-      const res = await fetch(`http://localhost:3333/presi/${dni}`, {
+      const res = await fetch(`http://127.0.0.1:4523/presidentes/${dni}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Error al eliminar presidente");

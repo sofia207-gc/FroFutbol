@@ -19,7 +19,7 @@ const ActuEqui: React.FC = () => {
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://localhost:3333/equipo/${equipoAEditar.codigo}`, {
+      const res = await fetch(`http://localhost:1111/equipos/${equipoAEditar.codigo}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

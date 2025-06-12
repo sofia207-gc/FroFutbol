@@ -27,10 +27,13 @@ const CrearEqui: React.FC = () => {
 
     try {
       setCargando(true);
-      const response = await fetch("http://localhost:1111/equipo", {
+      const response = await fetch("http://127.0.0.1:4523/equipos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({nombre,anio_fund,dni_presi,
+        body: JSON.stringify({
+          nombre: nombre.trim(),
+          anio_fund,
+          dni_presi,
         }),
       });
 
