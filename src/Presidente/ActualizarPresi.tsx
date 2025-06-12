@@ -2,11 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ActualizarPresi.module.css";
 
-interface Equipos {
-  codigo: number;
+interface Presi {
   nombre: string;
-  anio_de_fundacion: number;
-  presidente: string;
 }
 
 const ActuPresi: React.FC = () => {
@@ -21,7 +18,7 @@ const ActuPresi: React.FC = () => {
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://localhost:1111/equipos/${equipoAEditar.codigo}`, {
+      const res = await fetch(`http://127.0.0.1:4523/equipos/${presiAEditar.nombre}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -52,30 +49,6 @@ const ActuPresi: React.FC = () => {
               value={presiAEditar.nombre}
               onChange={(e) =>
                 setPresiAEditar({ ...presiAEditar, nombre: e.target.value })
-              }
-            />
-
-            <input
-              type="number"
-              placeholder="Año de Fundación"
-              value={presiAEditar.dni_presi}
-              onChange={(e) =>
-                setPresiAEditar({
-                  ...presiAEditar,
-                  dni_presi: parseInt(e.target.value) || 0,
-                })
-              }
-            />
-
-            <input
-              type="string"
-              placeholder="nombre"
-              value={presiAEditar.nombre}
-              onChange={(e) =>
-                setPresiAEditar({
-                  ...presiAEditar,
-                   nombre: e.target.value,
-                })
               }
             />
             <button onClick={actualizarEquipo}>Guardar</button>
