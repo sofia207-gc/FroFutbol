@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 interface Presidente {
-  dni_presi: number;
+  dni: number;
   nombre: string;
 }
 
@@ -33,7 +33,7 @@ interface Presidente {
     const presidentesFiltrados = presidentes.filter(
       (presidente) =>
         presidente.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-        presidente.dni_presi.toString().includes(filtro)
+        presidente.dni.toString().includes(filtro)
     );
 
     return (
@@ -60,8 +60,8 @@ interface Presidente {
             </thead>
             <tbody>
               {presidentesFiltrados.map((presidente) => (
-                <tr key={presidente.dni_presi}>
-                  <td>{presidente.dni_presi}</td>
+                <tr key={presidente.dni}>
+                  <td>{presidente.dni}</td>
                   <td>{presidente.nombre}</td>
                 </tr>
               ))}

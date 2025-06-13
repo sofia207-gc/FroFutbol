@@ -6,6 +6,7 @@ const CrearEqui: React.FC = () => {
   const [nombre, setNombre] = useState("");
   const [anio_fund, setAnio_fund] = useState<number>(0);
   const [dni_presi, setDni_presi] = useState<number>(0);
+  const [codigo, setCodigo] = useState<number>(0);
   const [mensaje, setMensaje] = useState<string>("");
   const [cargando, setCargando] = useState(false);
 
@@ -25,15 +26,20 @@ const CrearEqui: React.FC = () => {
       return;
     }
 
+    if (!codigo || codigo <= 0) {
+      setMensaje("Código del equipo inválido.");
+      return;
+    }
+
     try {
-      setCargando(true);
-      const response = await fetch("http://127.0.0.1:4523/equipos", {
+      const response = await fetch("http://127.0.0.1:4523/equipo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nombre: nombre.trim(),
+          nombre,
           anio_fund,
           dni_presi,
+          codigo,
         }),
       });
 
@@ -89,6 +95,17 @@ const CrearEqui: React.FC = () => {
                 onChange={(e) => {
                   const value = e.target.value;
                   setDni_presi(value === "" ? 0 : parseInt(value));
+                }}
+              />
+
+              <label htmlFor="codigo">Código</label>
+              <input
+                type="number"
+                id="codigo"
+                value={codigo}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setCodigo(value === "" ? 0 : parseInt(value));
                 }}
               />
             </div>

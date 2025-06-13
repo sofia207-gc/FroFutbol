@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import styles from "./ListarPresi.module.css";
 
 interface Presidente {
-  dni_presi: number;
+  dni: number;
   nombre: string;
 }
 
@@ -15,7 +15,7 @@ const ListarPresi: React.FC = () => {
 
   const listarPresidentes = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:4523/presidentes");
+      const res = await fetch("http://127.0.0.1:4523/presi");
       const data = await res.json();
       setPresidentes(data.mensaje);
     } catch (error) {
@@ -26,9 +26,8 @@ const ListarPresi: React.FC = () => {
   const eliminarPresidente = async (dni: number) => {
     const confirmado = confirm("¿Estás seguro de que quieres eliminar este presidente?");
     if (!confirmado) return;
-
     try {
-      const res = await fetch(`http://127.0.0.1:4523/presidentes/${dni}`, {
+      const res = await fetch(`http://127.0.0.1:4523/presi/${dni}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Error al eliminar presidente");
@@ -36,7 +35,6 @@ const ListarPresi: React.FC = () => {
       listarPresidentes();
     } catch (error) {
       alert("No se pudo eliminar el presidente.");
-      console.error("Error:", error);
     }
   };
 
@@ -46,7 +44,7 @@ const ListarPresi: React.FC = () => {
 
   const presidentesFiltrados = presidentes.filter((p) =>
     p.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    p.dni_presi.toString().includes(filtro)
+    p.dni.toString().includes(filtro)
   );
 
   return (
@@ -69,19 +67,19 @@ const ListarPresi: React.FC = () => {
         </thead>
         <tbody>
           {presidentesFiltrados.map((presi) => (
-            <tr key={presi.dni_presi}>
-              <td>{presi.dni_presi}</td>
+            <tr key={presi.dni}>
+              <td>{presi.dni}</td>
               <td>{presi.nombre}</td>
               <td>
                 <button
-                  onClick={() => eliminarPresidente(presi.dni_presi)}
+                  onClick={() => eliminarPresidente(presi.dni)}
                   className="btn btn-danger"
                 >
                   Eliminar
                 </button>
               </td>
               <td>
-                <Button variant="warning" onClick={() => navigate(`/ActualizarPresi/${presi.dni_presi}`)}>
+                <Button variant="warning" onClick={() => navigate(`/ActualizarPresi/${presi.dni}`)}>
                 Actualizar
                 </Button>
 

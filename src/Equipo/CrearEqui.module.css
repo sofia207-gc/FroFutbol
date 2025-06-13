@@ -1,12 +1,14 @@
+/* Contenedor del formulario */
 .formContainer {
   padding: 40px;
+  margin-top: 80px;
   display: flex;
   justify-content: center;
-  align-items: flex-start; 
-  margin-top: 80px;       
+  align-items: flex-start;
   background-color: #141414;
 }
 
+/* Estilo del formulario */
 .formulario {
   background-color: #1f1f1f;
   padding: 30px;
@@ -17,13 +19,16 @@
   box-shadow: 0 2px 5px rgba(255, 165, 0, 0.2);
 }
 
+/* Título del formulario */
 .titulo {
   text-align: center;
   color: orange;
   margin-bottom: 24px;
   font-size: 24px;
+  font-weight: bold;
 }
 
+/* Fila de inputs */
 .inputRow {
   display: flex;
   flex-wrap: wrap;
@@ -31,6 +36,7 @@
   margin-bottom: 20px;
 }
 
+/* Grupo individual de input y label */
 .inputGroup {
   flex: 1;
   display: flex;
@@ -40,27 +46,36 @@
 .inputGroup label {
   margin-bottom: 8px;
   font-weight: 500;
+  color: #f0f0f0;
 }
 
 .inputGroup input {
-  padding: 8px;
+  padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   background-color: #2a2a2a;
   color: white;
   font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
 }
 
+.inputGroup input:focus {
+  border-color: orange;
+}
+
+/* Botón de enviar */
 .boton {
   background-color: orange;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
   color: black;
   font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
   display: block;
-  margin: 0 auto;
+  margin: 20px auto 0;
+  transition: background-color 0.3s;
 }
 
 .boton:hover:not(:disabled) {
@@ -68,12 +83,18 @@
 }
 
 .boton:disabled {
-  background-color: #999;
+  background-color: #666;
+  color: #ddd;
   cursor: not-allowed;
 }
 
+/* Alerta de validación o mensaje */
 .alerta {
-  background-color: #2f2f2f ;
-  color: white  ;
-  border: 1px solid orange ;
+  background-color: #2f2f2f;
+  color: white;
+  border: 1px solid orange;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
 }

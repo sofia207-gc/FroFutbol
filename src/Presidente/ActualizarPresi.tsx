@@ -18,7 +18,7 @@ const ActuPresi: React.FC = () => {
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://127.0.0.1:4523/equipos/${presiAEditar.nombre}`, {
+      const res = await fetch(`http://127.0.0.1:4523/presi/${presiAEditar.nombre}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -1,17 +1,27 @@
 .navbarr {
-  background-color: #141414;
+  background-color: #141414 !important;
   padding: 12px 20px;
-  box-shadow: 0 2px 5px rgba(255, 165, 0, 0.2);
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+}
 
-  /* ¡Esto es clave! */
+.wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  border: none !important;
+}
+
+.left {
+  display: flex;
+  align-items: center;
 }
 
 .nombre {
@@ -24,15 +34,18 @@
 .links {
   display: flex;
   align-items: center;
-  flex-grow: 1;
+  gap: 16px;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .links a {
   color: white !important;
-  margin-right: 16px;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  border: none !important;
 }
 
 .links a:hover {
@@ -40,10 +53,11 @@
 }
 
 .logo {
+  height: 60px;
+  width: auto;
+  margin-left: 20px;
   position: absolute;
   top: 15px;
   right: 160px;
-  height: 60px;     
-  width: auto;
-  margin-left: 20px; 
 }
+

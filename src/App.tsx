@@ -27,8 +27,8 @@ function AppRoutes() {
         <Route path="/CrearPresi" element={<CrearPresi />} />
         <Route path="/ListarEqui" element={<ListarEqui />} />
         <Route path="/ListarPresi" element={<ListarPresi />} />
-        <Route path="/ActualizarEqui/:id" element={<ActuEqui />} />
-        <Route path="/ActualizarPresi/:id" element={<ActuPresi />} />
+        <Route path="/ActualizarEqui/:codigo" element={<ActuEqui />} />
+        <Route path="/ActualizarPresi" element={<ActuPresi />} />
         <Route path="/CerrarSesion" element={<CerrarSesion />} />
       </Routes>
     </>

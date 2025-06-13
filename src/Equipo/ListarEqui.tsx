@@ -4,9 +4,9 @@ import { Button } from "react-bootstrap";
 import styles from "./ListarEqui.module.css";
 
 interface Equipo {
-  id: number;
+  codigo: number;
   nombre: string;
-  dni_presi: string;
+  dni: number;
   anio_fund: number;
 }
 
@@ -17,7 +17,7 @@ const ListarEqui: React.FC = () => {
 
   const listarEquipos = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:4523/equipos");
+      const res = await fetch("http://127.0.0.1:4523/equipo");
       const data = await res.json();
       setEquipos(data.mensaje);
     } catch (error) {
@@ -25,33 +25,34 @@ const ListarEqui: React.FC = () => {
     }
   };
 
-  const eliminarEquipo = async (id: number) => {
-    const confirmado = confirm("¿Seguro que quieres eliminar este equipo?");
-    if (!confirmado) return;
+    const eliminarEquipo = async (codigo: number) => {
+      const confirmado = confirm("¿Seguro que quieres eliminar este equipo?");
+      if (!confirmado) return;
+      try {
+        const res = await fetch(`http://127.0.0.1:4523/equipo/${codigo}`, {
+          method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Error al eliminar equipo");
+        await res.json();
+        listarEquipos();
+      } catch (error) {
+        alert("No se pudo eliminar el equipo.");
+        console.error("Error:", error);
+      }
+    };
 
-    try {
-      const res = await fetch(`http://127.0.0.1:4523/equipos/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Error al eliminar equipo");
-      await res.json();
-      listarEquipos();
-    } catch (error) {
-      alert("No se pudo eliminar el equipo.");
-      console.error("Error:", error);
-    }
-    return(eliminarEquipo);
-  };
 
   useEffect(() => {
     listarEquipos();
   }, []);
 
   const equiposFiltrados = equipos.filter((e) =>
-    e.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
-    e.dni_presi.toLowerCase().includes(filtro.toLowerCase()) ||
-    e.id.toString().includes(filtro)
-  );
+  (typeof e.nombre === "string" && e.nombre.toLowerCase().includes(filtro.toLowerCase())) ||
+  (typeof e.dni === "number" && e.dni.toString().includes(filtro)) ||
+  (typeof e.codigo === "number" && e.codigo.toString().includes(filtro))
+);
+
+
 
   return (
     <div className={styles.container}>
@@ -74,18 +75,18 @@ const ListarEqui: React.FC = () => {
         </thead>
         <tbody>
           {equiposFiltrados.map((equipo) => (
-            <tr key={equipo.id}>
-              <td>{equipo.id}</td>
+            <tr key={equipo.codigo}>
+              <td>{equipo.codigo}</td>
               <td>{equipo.nombre}</td>
-              <td>{equipo.dni_presi}</td>
+              <td>{equipo.dni}</td>
               <td>{equipo.anio_fund}</td>
               <td>
-                <button className="btn btn-danger" onClick={() => eliminarEquipo(equipo.id)}>
+                <button className="btn btn-danger" onClick={() => eliminarEquipo(equipo.codigo)}>
                   Eliminar
                 </button>
               </td>
               <td>
-               <Button variant="warning" onClick={() => navigate(`/ActualizarEqui/${equipo.id}`)}>
+               <Button variant="warning" onClick={() => navigate(`/ActualizarEqui/${equipo.codigo}`)}>
                Actualizar
                </Button>
               </td>

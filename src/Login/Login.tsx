@@ -10,7 +10,7 @@ const Login = () => {
   const enviardatos = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await fetch("http://127.0.0.1:4523/usuario", {
+    const res = await fetch("http://127.0.0.1:4523/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password: contraseña }),
