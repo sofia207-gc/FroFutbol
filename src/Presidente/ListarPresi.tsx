@@ -23,20 +23,20 @@ const ListarPresi: React.FC = () => {
     }
   };
 
-  const eliminarPresidente = async (dni: number) => {
-    const confirmado = confirm("¿Estás seguro de que quieres eliminar este presidente?");
-    if (!confirmado) return;
-    try {
-      const res = await fetch(`http://127.0.0.1:4523/presi/${dni}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Error al eliminar presidente");
-      await res.json();
-      listarPresidentes();
-    } catch (error) {
-      alert("No se pudo eliminar el presidente.");
-    }
-  };
+  const eliminarPresi = async (dni: number) => {
+  const confirmado = confirm("¿Estás seguro de eliminar este presidente?");
+  if (!confirmado) return;
+  try {
+    const res = await fetch(`http://127.0.0.1:4523/presi/${dni}`, {
+      method: "DELETE",
+    });
+    if (!res.ok) throw new Error("No se pudo eliminar");
+    alert("Presidente eliminado correctamente");
+  } catch (error) {
+    console.error("Error eliminando presidente:", error);
+    alert("Error al eliminar presidente.");
+  }
+};
 
   useEffect(() => {
     listarPresidentes();
@@ -72,7 +72,7 @@ const ListarPresi: React.FC = () => {
               <td>{presi.nombre}</td>
               <td>
                 <button
-                  onClick={() => eliminarPresidente(presi.dni)}
+                  onClick={() => eliminarPresi(presi.dni)}
                   className="btn btn-danger"
                 >
                   Eliminar

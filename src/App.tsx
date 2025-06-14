@@ -9,9 +9,9 @@ import ActuPresi from "./Presidente/ActualizarPresi";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Registro from "./Registro/Registro";
 import CerrarSesion from "./CerrarSesion/CerrarS";
+import Perfil from "./Perfil/Perfil";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-//  Componente que envuelve rutas y muestra Navbarr si no estamos en login
 function AppRoutes() {
   const location = useLocation();
   const isLoginPage = location.pathname === "/";
@@ -28,8 +28,9 @@ function AppRoutes() {
         <Route path="/ListarEqui" element={<ListarEqui />} />
         <Route path="/ListarPresi" element={<ListarPresi />} />
         <Route path="/ActualizarEqui/:codigo" element={<ActuEqui />} />
-        <Route path="/ActualizarPresi" element={<ActuPresi />} />
+        <Route path="/ActualizarPresi/:dni" element={<ActuPresi />} />
         <Route path="/CerrarSesion" element={<CerrarSesion />} />
+        <Route path="/Perfil" element={<Perfil />} />
       </Routes>
     </>
   );

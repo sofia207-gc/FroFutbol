@@ -9,87 +9,116 @@ interface Equipos {
 }
 
 const ActuEqui: React.FC = () => {
-  const { codigo } = useParams();
+  const { codigo } = useParams();              
   const navigate = useNavigate();
-  const [equipoAEditar, setEquipoAEditar] = useState<Equipos | null>(null);
+  const [equipo, setEquipo] = useState<Equipos | null>(null);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
-    const obtenerEquipo = async () => {
+    const fetchEquipo = async () => {
       try {
-        const res = await fetch(`http://localhost:1111/equipo/${codigo}`);
-        if (!res.ok) throw new Error("No se pudo obtener el equipo");
+        const res = await fetch(`http://127.0.0.1:4523/equipo/${codigo}`);
         const data = await res.json();
-        setEquipoAEditar(data.mensaje); // Asegúrate que el backend responde con "mensaje"
-      } catch (error) {
-        console.error("Error al cargar equipo:", error);
+
+        console.log("Respuesta del backend:", data);
+
+        let encontrado: Equipos | undefined;
+
+        if (Array.isArray(data?.mensaje)) {
+          // el backend devuelve un array
+          encontrado = data.mensaje.find(
+            (e: Equipos) => e.codigo === Number(codigo)
+          ) || data.mensaje[0];               
+        } else if (data?.mensaje && data.mensaje.codigo) {
+          encontrado = data.mensaje;
+        } else if (data.codigo) {
+          encontrado = data;
+        }
+
+        if (encontrado) {
+          setEquipo(encontrado);
+        } else {
+          alert("No se encontró el equipo.");
+          navigate("/ListarEqui");
+        }
+      } catch (err) {
+        console.error("Error al obtener equipo:", err);
+        alert("Error al obtener equipo.");
+        navigate("/ListarEqui");
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (codigo) obtenerEquipo();
-  }, [codigo]);
+    if (codigo) fetchEquipo();
+  }, [codigo, navigate]);
 
   const actualizarEquipo = async () => {
-    if (!equipoAEditar) return;
-    const seguro = confirm("¿Estás seguro de que quieres actualizar este equipo?");
-    if (!seguro) return;
+    if (!equipo) return;
 
     try {
       const res = await fetch(`http://127.0.0.1:4523/equipo/${codigo}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(equipoAEditar),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(equipo),
       });
 
-      if (!res.ok) throw new Error("Error al actualizar equipo.");
-      await res.json();
-      alert("Equipo actualizado con éxito.");
-      navigate("/"); // Regresa a la lista
-    } catch (error) {
+      if (!res.ok) throw new Error("Error al actualizar");
+
+      alert("Equipo actualizado correctamente");
+      navigate("/ListarEqui");
+    } catch (err) {
+      console.error("Error al actualizar equipo:", err);
       alert("No se pudo actualizar el equipo.");
-      console.error("Error:", error);
     }
   };
 
-  if (!equipoAEditar) return <p>Cargando equipo...</p>;
+  if (loading)
+    return <p style={{ textAlign: "center" }}>Cargando datos del equipo...</p>;
+
+  if (!equipo)
+    return <p style={{ textAlign: "center" }}>No se encontró el equipo.</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Actualizar Equipo</h2>
+    <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
+      <h2 style={{ textAlign: "center", color: "orange" }}>Actualizar Equipo</h2>
+
       <input
-        type="text"
+        value={equipo.nombre}
+        onChange={(e) => setEquipo({ ...equipo, nombre: e.target.value })}
         placeholder="Nombre"
-        value={equipoAEditar.nombre}
-        onChange={(e) =>
-          setEquipoAEditar({ ...equipoAEditar, nombre: e.target.value })
-        }
+        style={{ width: "100%", marginBottom: "10px" }}
       />
+
       <input
-        type="text"
+        value={equipo.dni_presi}
+        onChange={(e) => setEquipo({ ...equipo, dni_presi: e.target.value })}
         placeholder="Presidente"
-        value={equipoAEditar.dni_presi}
-        onChange={(e) =>
-          setEquipoAEditar({ ...equipoAEditar, dni_presi: e.target.value })
-        }
+        style={{ width: "100%", marginBottom: "10px" }}
       />
+
       <input
         type="number"
-        placeholder="Año de Fundación"
-        value={equipoAEditar.anio_fund}
+        value={equipo.anio_fund}
         onChange={(e) =>
-          setEquipoAEditar({
-            ...equipoAEditar,
+          setEquipo({
+            ...equipo,
             anio_fund: parseInt(e.target.value) || 0,
           })
         }
+        placeholder="Año de Fundación"
+        style={{ width: "100%", marginBottom: "10px" }}
       />
-      <br />
-      <button onClick={actualizarEquipo}>Guardar</button>
+
       <button
-        onClick={() => navigate("/")}
-        style={{ marginLeft: "1rem", backgroundColor: "#ccc" }}
+        onClick={actualizarEquipo}
+        style={{ width: "100%", marginBottom: "10px" }}
       >
+        Guardar
+      </button>
+
+      <button onClick={() => navigate("/")} style={{ width: "100%" }}>
         Cancelar
       </button>
     </div>

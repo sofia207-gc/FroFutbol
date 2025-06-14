@@ -1,0 +1,40 @@
+.perfil-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.perfil-card {
+  background: #534c4c;
+  padding: 25px 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.perfil-card h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.perfil-card p {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.btn-salir {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-salir:hover {
+  background-color: #c82333;
+}

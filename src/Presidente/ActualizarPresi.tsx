@@ -1,24 +1,43 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./ActualizarPresi.module.css";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface Presi {
   nombre: string;
 }
 
 const ActuPresi: React.FC = () => {
+  const { dni } = useParams();
+  const navigate = useNavigate();
   const [presiAEditar, setPresiAEditar] = useState<Presi | null>(null);
 
+  useEffect(() => {
+    const fetchPresidente = async () => {
+      try {
+        const res = await fetch(`http://127.0.0.1:4523/presi/${dni}`);
+        const data = await res.json();
+        console.log("Presi del backend:", data);
 
-  const actualizarEquipo = async () => {
-    
+        if (!res.ok) throw new Error("No encontrado");
+
+        setPresiAEditar(data);
+      } catch (error) {
+        console.error("Error al obtener presidente:", error);
+        alert("No se pudo obtener presidente.");
+        navigate("/ListarPresi");
+      }
+    };
+
+    if (dni) fetchPresidente();
+  }, [dni, navigate]);
+
+  const actualizarPresi = async () => {
     if (!presiAEditar) return;
 
-    const seguro = confirm("¿Estás seguro de que quieres actualizar este equipo?");
+    const seguro = confirm("¿Estás seguro de que quieres actualizar este presidente?");
     if (!seguro) return;
 
     try {
-      const res = await fetch(`http://127.0.0.1:4523/presi/${presiAEditar.nombre}`, {
+      const res = await fetch(`http://127.0.0.1:4523/presi/${dni}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -26,36 +45,36 @@ const ActuPresi: React.FC = () => {
         body: JSON.stringify(presiAEditar),
       });
 
-      if (!res.ok) throw new Error("Error al actualizar equipo.");
-      await res.json();
-      setPresiAEditar(null);
+      if (!res.ok) throw new Error("Error al actualizar presidente.");
+
+      alert("Presidente actualizado correctamente");
+      navigate("/ListarPresi");
     } catch (error) {
-      alert("No se pudo actualizar el equipo.");
-      console.error("Error:", error);
+      console.error("Error al actualizar presidente:", error);
+      alert("No se pudo actualizar.");
     }
   };
 
-  return (
-    <div>
-      {/* Modal de edición */}
-      {presiAEditar && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h4>Actualizar Equipo</h4>
+  if (!presiAEditar) return <p style={{ textAlign: "center" }}>Cargando presidente...</p>;
 
-            <input
-              type="text"
-              placeholder="Nombre"
-              value={presiAEditar.nombre}
-              onChange={(e) =>
-                setPresiAEditar({ ...presiAEditar, nombre: e.target.value })
-              }
-            />
-            <button onClick={actualizarEquipo}>Guardar</button>
-            <button onClick={() => setPresiAEditar(null)}>Cancelar</button>
-          </div>
-        </div>
-      )}
+  return (
+    <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
+      <h2 style={{ textAlign: "center", color: "orange" }}>Actualizar Presidente</h2>
+      <input
+        type="text"
+        value={presiAEditar.nombre}
+        onChange={(e) =>
+          setPresiAEditar({ ...presiAEditar, nombre: e.target.value })
+        }
+        style={{ width: "100%", marginBottom: "10px" }}
+        placeholder="Nombre del presidente"
+      />
+      <button onClick={actualizarPresi} style={{ width: "100%", marginBottom: "10px" }}>
+        Guardar
+      </button>
+      <button onClick={() => navigate("/ListarPresi")} style={{ width: "100%" }}>
+        Cancelar
+      </button>
     </div>
   );
 };

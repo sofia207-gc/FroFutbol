@@ -14,6 +14,7 @@ const Navbarr: React.FC = () => {
                             <Nav.Link as={Link} to="/CrearPresi">Crear Presidente</Nav.Link>
                             <Nav.Link as={Link} to="/ListarEqui">Listar Equipos</Nav.Link>
                             <Nav.Link as={Link} to="/ListarPresi">Listar Presidentes</Nav.Link> 
+                            <Nav.Link as={Link} to="/Perfil">Perfil</Nav.Link>
                             <Nav.Link as={Link} to="/CerrarSesion">Cerrar Sesión</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

@@ -6,29 +6,38 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [contraseña, setContraseña] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
   const enviardatos = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const res = await fetch("http://127.0.0.1:4523/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password: contraseña }),
-    });
-
-    const data = await res.json();
-
-    if (data.msj === "Inicio de sesion correcto") {
-      localStorage.setItem("email", email);
-      localStorage.setItem("contraseña", contraseña);
-      localStorage.setItem("auth", "true");
-      navigate("/crearEqui"); 
-    }
-    if (data.msj === "Usuario no encontrado") {
-      alert("Usuario no encontrado");
+    if (!email.trim() || !contraseña.trim()) {
+      alert("Por favor, completa todos los campos.");
+      return;
     }
 
-    console.log(data);
+    try {
+      const res = await fetch("http://127.0.0.1:4523/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: contraseña }),
+      });
+
+      const data = await res.json();
+      console.log("Respuesta del servidor:", data);
+
+      if (data.mensaje === "Usuario logueado") {
+        localStorage.setItem("email", email);
+        localStorage.setItem("contraseña", contraseña);
+        localStorage.setItem("auth", "true");
+        navigate("/crearEqui");
+      } else {
+        alert(data.mensaje || "Error al iniciar sesión.");
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      alert("No se pudo iniciar sesión. Intenta más tarde.");
+    }
   };
 
   return (
@@ -38,11 +47,14 @@ const Login = () => {
         <form onSubmit={enviardatos}>
           <input
             placeholder="Escriba el Gmail"
+            type="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             placeholder="Escriba el Password"
             type="password"
+            value={contraseña}
             onChange={(e) => setContraseña(e.target.value)}
           />
           <button type="submit" className="btn-login">
@@ -50,7 +62,7 @@ const Login = () => {
             INGRESAR
           </button>
           <a href="#" onClick={() => navigate("/registro")}>
-            ¿No tienes cuenta? REGISTRATE AHORA
+            ¿No tienes cuenta? REGÍSTRATE AHORA
           </a>
         </form>
       </div>

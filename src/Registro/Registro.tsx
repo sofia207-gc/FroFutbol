@@ -15,7 +15,6 @@ const Registro = () => {
   const enviarDatos = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validación de campos
     if (!nombre.trim() || !apellido.trim() || !email.trim() || !contraseña.trim() || !confirmarContraseña.trim() || !telefono.trim()) {
       alert("Por favor, completa todos los campos obligatorios.");
       return;
@@ -43,8 +42,8 @@ const Registro = () => {
       const data = await res.json();
       console.log("Respuesta del servidor:", data);
 
-      if (data.msj === "Registro correcto") {
-        // Guardar en localStorage
+  
+      if (data.mensaje === "Usuario registrado") {
         localStorage.setItem("email", email);
         localStorage.setItem("contraseña", contraseña);
         localStorage.setItem("nombre", nombre);
@@ -53,9 +52,9 @@ const Registro = () => {
         localStorage.setItem("telefono", telefono);
         localStorage.setItem("auth", "true");
 
-        navigate("/login");
+        navigate("/CrearEqui");
       } else {
-        alert(data.msj || "Ocurrió un error durante el registro.");
+        alert(data.mensaje || "Ocurrió un error durante el registro.");
       }
     } catch (error) {
       console.error("Error al registrar:", error);
@@ -68,48 +67,13 @@ const Registro = () => {
       <div className="login">
         <h2>REGISTRO</h2>
         <form onSubmit={enviarDatos}>
-          <input
-            placeholder="Escriba tu nombre"
-            type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
-          <input
-            placeholder="Escriba tu apellido"
-            type="text"
-            value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
-          />
-          <input
-            placeholder="Escriba tu email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            placeholder="Escriba tu contraseña"
-            type="password"
-            value={contraseña}
-            onChange={(e) => setContraseña(e.target.value)}
-          />
-          <input
-            placeholder="Confirma tu contraseña"
-            type="password"
-            value={confirmarContraseña}
-            onChange={(e) => setConfirmarContraseña(e.target.value)}
-          />
-          <input
-            placeholder="Escriba tu dirección"
-            type="text"
-            value={direccion}
-            onChange={(e) => setDireccion(e.target.value)}
-          />
-          <input
-            placeholder="Escriba tu teléfono"
-            type="text"
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-          />
+          <input placeholder="Escriba tu nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+          <input placeholder="Escriba tu apellido" value={apellido} onChange={(e) => setApellido(e.target.value)} />
+          <input placeholder="Escriba tu email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input placeholder="Escriba tu contraseña" type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)} />
+          <input placeholder="Confirma tu contraseña" type="password" value={confirmarContraseña} onChange={(e) => setConfirmarContraseña(e.target.value)} />
+          <input placeholder="Escriba tu dirección" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+          <input placeholder="Escriba tu teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
 
           <button type="submit" className="btn-login">
             <img src="/balon.png" alt="balón" className="balon-btn" />
